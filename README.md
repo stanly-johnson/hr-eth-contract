@@ -1,5 +1,7 @@
 HR recruitment in Blockchain
 
+Note : Before running the project, modify the `Recruitment.sol` file with the address of your ganache instance.
+
 To run the project
 - download the zip file
 - unzip and run npm install
@@ -7,6 +9,7 @@ To run the project
 - open terminal and navigate to project directory
 - type `truffle migrate --reset`
 - once the deployment is complete type `truffle console`
+
 
 Refer https://www.youtube.com/watch?v=3681ZYbDSSk&feature=youtu.be&t=1h20m38s for how to execute
 smart contract

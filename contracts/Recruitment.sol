@@ -28,7 +28,7 @@ contract Recruitment {
         candidatesCount ++;
         // using a static address temporarly, need to store address of each college seperately
         address collegeAddress;
-        collegeAddress = address(0x5660df1681a32E70704439E9243b1B91c369580e);
+        collegeAddress = address(0x5660df1681a32E70704439E9243b1B91c369580e); //replace with your local ganache address
         // create the candidate in blockchain memory
         candidates[candidatesCount] = Candidate(candidatesCount,_name, _college, _addr, _phone, false, collegeAddress);
     }
