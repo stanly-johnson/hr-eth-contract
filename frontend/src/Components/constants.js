@@ -1,4 +1,5 @@
-export const CONTRACT_ADDRESS = '0x79ccb00093e1bc98DF45000574AbcEEc018411cE'
+export const CONTRACT_ADDRESS = '0xbE2256236B637B2C3AB9A3e43E06e3790E33dAE8'
+export const APPROVAL_ADDRESS = "0x5660df1681a32E70704439E9243b1B91c369580e"
 
 export const CONTRACT_ABI = [
   {
@@ -71,6 +72,36 @@ export const CONTRACT_ABI = [
     ],
     "payable": false,
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_college",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_addr",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_phone",
+        "type": "string"
+      }
+    ],
+    "name": "createCandidate",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

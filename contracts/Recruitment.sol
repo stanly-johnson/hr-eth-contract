@@ -20,11 +20,11 @@ contract Recruitment {
 
     constructor () public {
         // create a test candidate
-        createCandidate("person One", "College XYZ", "random addr", "12345");
+        createCandidate("person One", "College XYZ", "random addr", "1234");
     }
 
     //funtion to register new candidate
-    function createCandidate (string memory _name, string memory _college, string memory _addr, string memory _phone) private {
+    function createCandidate (string memory _name, string memory _college, string memory _addr, string memory _phone) public {
         candidatesCount ++;
         // using a static address temporarly, need to store address of each college seperately
         address collegeAddress;

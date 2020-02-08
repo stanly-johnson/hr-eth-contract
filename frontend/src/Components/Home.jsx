@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import Web3 from 'web3'
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from './constants'
+import CandidateTable from './CandidateTable'
 
 class Home extends Component {
     state = { 
@@ -41,23 +42,21 @@ class Home extends Component {
             <div className="jumbotron">
                 <h1 className="display-4">Home</h1>
                 <p>Active Account : {this.state.account}</p>
-                <Button>Add New Student</Button>
+                <button type="button" class="btn btn-primary" onClick={() => {
+              window.location = '/add';
+            }}>Add New Student</button>
             </div>
 
             <div className="row">
                 {this.state && !this.state.loading && (
-                    this.state.candidateList.map(c => {
-                        return(<ul>
-                            <li>UID : {c.uid}</li>
-                            <li>Name : {c.name}</li>
-                            <li>College : {c.college}</li>
-                            <li>Phone : {c.phone}</li>
-                            <li>Verified : {String(c.verified)}</li>
-                            <hr />
-                        </ul>)
-                        
-                    })
-                )}
+                <div className="col-md-6">
+                {this.state.candidateList.map(c => (
+                  <ul key={c.uid}>
+                    <CandidateTable c={c} />
+                  </ul>
+                ))}
+              </div>
+              )}
             </div>
 
             </div>
