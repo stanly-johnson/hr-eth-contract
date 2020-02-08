@@ -33,11 +33,11 @@ contract Recruitment {
         candidates[candidatesCount] = Candidate(candidatesCount,_name, _college, _addr, _phone, false, collegeAddress);
     }
 
-    function approveCandidate (uint _uid) public {
+    function approveCandidate (uint _uid, bool value) public {
         // need to check if the contract is called by the respective college
         require(msg.sender == candidates[_uid].verifier);
 
-        candidates[_uid].verified = true;
+        candidates[_uid].verified = value;
     }
 
 // end of recruitment smart contract
