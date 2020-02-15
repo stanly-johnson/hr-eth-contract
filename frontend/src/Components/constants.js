@@ -1,6 +1,8 @@
-export const CONTRACT_ADDRESS = '0xbE2256236B637B2C3AB9A3e43E06e3790E33dAE8'
+// every deployment contract address changes
+export const CONTRACT_ADDRESS = '0x79ccb00093e1bc98DF45000574AbcEEc018411cE'
 export const APPROVAL_ADDRESS = "0x5660df1681a32E70704439E9243b1B91c369580e"
 
+// abi changes only with code change
 export const CONTRACT_ABI = [
   {
     "inputs": [],

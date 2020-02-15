@@ -16,6 +16,9 @@ class Home extends Component {
         const web3 = new Web3("http://127.0.0.1:7545");
         const accounts = await web3.eth.getAccounts()
         this.setState({ account: accounts[0] })
+        // copy contract abi from build/contracts
+        // copy contract address from ganache 
+        // paste in contants.js
         const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS)
         this.setState({ contract })
         const candidatesCount = await contract.methods.candidatesCount().call()
