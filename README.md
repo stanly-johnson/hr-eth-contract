@@ -8,10 +8,12 @@ To run the project
 - Run ganache on local machine
 - open terminal and navigate to project directory
 - type `truffle migrate --reset`
-- once the deployment is complete type `truffle console`
+- once the deployment is complete type `truffle console` to interact with the smart contract
 
+To run the UI
+- navigate to `frontend` folder
+- `npm install`
+- `npm start`
 
-Refer https://www.youtube.com/watch?v=3681ZYbDSSk&feature=youtu.be&t=1h20m38s for how to execute
-smart contract
 
 Refer `screenshots` folder to see working and how to run the smart contract
