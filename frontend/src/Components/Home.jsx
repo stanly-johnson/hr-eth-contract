@@ -1,8 +1,9 @@
 import React, { Component } from 'react';   
 import { Button } from 'react-bootstrap';
 import Web3 from 'web3'
-import { CONTRACT_ABI, CONTRACT_ADDRESS } from './constants'
+import { CONTRACT_ABI, CONTRACT_ADDRESS, INFURA_PROVIDER, SENDER_ADDRESS, SENDER_PVT_KEY } from './constants'
 import CandidateTable from './CandidateTable'
+var Tx = require('ethereumjs-tx');
 
 class Home extends Component {
     state = { 
@@ -13,25 +14,34 @@ class Home extends Component {
      }
 
     fetchBlockchainData = async() => {
-        const web3 = new Web3("http://127.0.0.1:7545");
-        const accounts = await web3.eth.getAccounts()
-        this.setState({ account: accounts[0] })
-        // copy contract abi from build/contracts
-        // copy contract address from ganache 
-        // paste in contants.js
-        const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS)
-        this.setState({ contract })
-        const candidatesCount = await contract.methods.candidatesCount().call()
-        console.log(candidatesCount)
-        this.setState({ candidatesCount })
-        for (var i = 1; i <= candidatesCount; i++) {
-        const cand = await contract.methods.candidates(i).call()
-        this.setState({
-            candidateList: [...this.state.candidateList, cand]
-        })
-        }
-        this.setState({ loading: false })
-        console.log(this.state.candidateList)
+      const web3 = new Web3(new Web3.providers.HttpProvider(INFURA_PROVIDER));
+      var getNonce = await web3.eth.getTransactionCount(SENDER_ADDRESS, 'pending');
+      var contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS, { from: SENDER_ADDRESS });
+      const payload = contract.methods.createCandidate(this.state.name, this.state.college, this.state.addr, this.state.phone).encodeABI();
+      // prepare transaction
+      var rawTx = {
+          nonce: getNonce,
+          gasPrice: web3.utils.toHex('10000000000'),
+          gasLimit: web3.utils.toHex('3000000'),
+          to: CONTRACT_ADDRESS,
+          value: '0x0',
+          data: payload
+      };
+
+      console.log(rawTx);
+      var tx = new Tx(rawTx);
+      var privKey = Buffer.from(SENDER_PVT_KEY, 'hex');
+      tx.sign(privKey);
+
+      var serializedTx = tx.serialize();
+
+      web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'), function(err, hash) {
+          if (!err) {
+              console.log(hash);
+          } else {
+              console.log(err)
+          }
+      })
     }
 
     async componentDidMount() {

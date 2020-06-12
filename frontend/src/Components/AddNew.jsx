@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
-import { CONTRACT_ABI, CONTRACT_ADDRESS } from './constants'
-
+import { CONTRACT_ABI, CONTRACT_ADDRESS, INFURA_PROVIDER, SENDER_ADDRESS, SENDER_PVT_KEY } from './constants'
+var Tx = require('ethereumjs-tx');
 class AddNew extends Component {
 
     state = { 
@@ -18,16 +18,36 @@ class AddNew extends Component {
       };
 
     doSubmit = async() => {
-        const web3 = new Web3("http://127.0.0.1:7545");
-        const accounts = await web3.eth.getAccounts()
-        this.setState({ account: accounts[0] })
-        const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS)
-        contract.methods.createCandidate(this.state.name, this.state.college, this.state.addr, this.state.phone)
-        .send({ from: this.state.account, gas:3000000 })
-        .once('receipt', (receipt) => {
-            console.log(receipt)
-            this.setState({ loading: false })
-          })
+        const web3 = new Web3(new Web3.providers.HttpProvider(INFURA_PROVIDER));
+        var getNonce = await web3.eth.getTransactionCount(SENDER_ADDRESS, 'pending');
+        var contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS, { from: SENDER_ADDRESS });
+        const payload = contract.methods.createCandidate(this.state.name, this.state.college, this.state.addr, this.state.phone)
+        .encodeABI();
+        // prepare transaction
+        var rawTx = {
+            nonce: getNonce,
+            gasPrice: web3.utils.toHex('10000000000'),
+            gasLimit: web3.utils.toHex('3000000'),
+            to: CONTRACT_ADDRESS,
+            value: '0x0',
+            data: payload
+        };
+
+        console.log(rawTx);
+        var tx = new Tx(rawTx);
+        var privKey = Buffer.from(SENDER_PVT_KEY, 'hex');
+        tx.sign(privKey);
+
+        var serializedTx = tx.serialize();
+
+        web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'), function(err, hash) {
+            if (!err) {
+                console.log(hash);
+            } else {
+                console.log(err)
+            }
+        })
+        
     }
 
     

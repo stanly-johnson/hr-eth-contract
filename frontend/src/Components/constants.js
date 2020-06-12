@@ -1,7 +1,9 @@
 // every deployment contract address changes
-export const CONTRACT_ADDRESS = '0x79ccb00093e1bc98DF45000574AbcEEc018411cE'
+export const CONTRACT_ADDRESS = '0xCA230be42758703a61D9d333710e4Eae0c5E17Ed'
 export const APPROVAL_ADDRESS = "0x5660df1681a32E70704439E9243b1B91c369580e"
-
+export const INFURA_PROVIDER = "https://rinkeby.infura.io/v3/fe850a1d3b5f4d4e9f9df5f6760e691d"
+export const SENDER_ADDRESS = "0xee60ae00fefb521aee05a33f96e50e1934a9913c"
+export const SENDER_PVT_KEY = "26240f03b04881bca5ba9e430923cc216c430e76f8b116255d454544943c4405"
 // abi changes only with code change
 export const CONTRACT_ABI = [
   {
